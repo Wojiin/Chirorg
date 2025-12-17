@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des listes matériel{% endblock %}
+
+{% block body %}
+<h1>Liste des listes matériel</h1>
+
+{% for liste_materiel in listes_materiel %}
+
+{{ liste_materiel.chirurgien.prenom }} {{ liste_materiel.chirurgien.nom }} {{ liste_materiel.materiel.nom }} <br>
+    
+{% endfor %}
+
+{% endblock %}

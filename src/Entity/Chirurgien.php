@@ -7,6 +7,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+namespace App\Entity;
+
+use App\Repository\ChirurgienRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+
 #[ORM\Entity(repositoryClass: ChirurgienRepository::class)]
 class Chirurgien
 {
@@ -21,6 +28,10 @@ class Chirurgien
     #[ORM\Column(length: 150)]
     private ?string $prenom = null;
 
+    #[ORM\ManyToOne(inversedBy: 'chirurgiens')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Specialite $specialiser = null;
+
     /**
      * @var Collection<int, ProgrammeOperatoire>
      */
@@ -28,38 +39,20 @@ class Chirurgien
     private Collection $programmeOperatoires;
 
     /**
-     * @var Collection<int, Chirurgie>
+     * @var Collection<int, ChirurgienChirurgieMateriel>
      */
-    #[ORM\OneToMany(targetEntity: Chirurgie::class, mappedBy: 'chirurgien')]
-    private Collection $opérer;
-
-    /**
-     * @var Collection<int, ListeMateriel>
-     */
-    #[ORM\OneToMany(targetEntity: ListeMateriel::class, mappedBy: 'chirurgien', orphanRemoval: true)]
-    private Collection $choisir;
-
-    #[ORM\ManyToOne(inversedBy: 'chirurgiens')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Specialite $specialiser = null;
+    #[ORM\OneToMany(targetEntity: ChirurgienChirurgieMateriel::class, mappedBy: 'chirurgien')]
+    private Collection $chirurgienChirurgieMateriels;
 
     public function __construct()
     {
         $this->programmeOperatoires = new ArrayCollection();
-        $this->opérer = new ArrayCollection();
-        $this->choisir = new ArrayCollection();
+        $this->chirurgienChirurgieMateriels = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function setId(int $id): static
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     public function getNom(): ?string
@@ -70,7 +63,6 @@ class Chirurgien
     public function setNom(string $nom): static
     {
         $this->nom = $nom;
-
         return $this;
     }
 
@@ -82,7 +74,17 @@ class Chirurgien
     public function setPrenom(string $prenom): static
     {
         $this->prenom = $prenom;
+        return $this;
+    }
 
+    public function getSpecialiser(): ?Specialite
+    {
+        return $this->specialiser;
+    }
+
+    public function setSpecialiser(?Specialite $specialiser): static
+    {
+        $this->specialiser = $specialiser;
         return $this;
     }
 
@@ -100,91 +102,43 @@ class Chirurgien
             $this->programmeOperatoires->add($programmeOperatoire);
             $programmeOperatoire->setAssumer($this);
         }
-
         return $this;
     }
 
     public function removeProgrammeOperatoire(ProgrammeOperatoire $programmeOperatoire): static
     {
         if ($this->programmeOperatoires->removeElement($programmeOperatoire)) {
-            // set the owning side to null (unless already changed)
             if ($programmeOperatoire->getAssumer() === $this) {
                 $programmeOperatoire->setAssumer(null);
             }
         }
-
         return $this;
     }
 
     /**
-     * @return Collection<int, Chirurgie>
+     * @return Collection<int, ChirurgienChirurgieMateriel>
      */
-    public function getOpérer(): Collection
+    public function getChirurgienChirurgieMateriels(): Collection
     {
-        return $this->opérer;
+        return $this->chirurgienChirurgieMateriels;
     }
 
-    public function addOpRer(Chirurgie $opRer): static
+    public function addChirurgienChirurgieMateriel(ChirurgienChirurgieMateriel $ccm): static
     {
-        if (!$this->opérer->contains($opRer)) {
-            $this->opérer->add($opRer);
-            $opRer->setChirurgien($this);
+        if (!$this->chirurgienChirurgieMateriels->contains($ccm)) {
+            $this->chirurgienChirurgieMateriels->add($ccm);
+            $ccm->setChirurgien($this);
         }
-
         return $this;
     }
 
-    public function removeOpRer(Chirurgie $opRer): static
+    public function removeChirurgienChirurgieMateriel(ChirurgienChirurgieMateriel $ccm): static
     {
-        if ($this->opérer->removeElement($opRer)) {
-            // set the owning side to null (unless already changed)
-            if ($opRer->getChirurgien() === $this) {
-                $opRer->setChirurgien(null);
+        if ($this->chirurgienChirurgieMateriels->removeElement($ccm)) {
+            if ($ccm->getChirurgien() === $this) {
+                $ccm->setChirurgien(null);
             }
         }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, ListeMateriel>
-     */
-    public function getChoisir(): Collection
-    {
-        return $this->choisir;
-    }
-
-    public function addChoisir(ListeMateriel $choisir): static
-    {
-        if (!$this->choisir->contains($choisir)) {
-            $this->choisir->add($choisir);
-            $choisir->setChirurgien($this);
-        }
-
-        return $this;
-    }
-
-    public function removeChoisir(ListeMateriel $choisir): static
-    {
-        if ($this->choisir->removeElement($choisir)) {
-            // set the owning side to null (unless already changed)
-            if ($choisir->getChirurgien() === $this) {
-                $choisir->setChirurgien(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getSpecialiser(): ?Specialite
-    {
-        return $this->specialiser;
-    }
-
-    public function setSpecialiser(?Specialite $specialiser): static
-    {
-        $this->specialiser = $specialiser;
-
         return $this;
     }
 }

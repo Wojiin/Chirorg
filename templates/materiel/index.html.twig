@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste du matériel{% endblock %}
+
+{% block body %}
+<h1>Liste du matériel</h1>
+
+{% for materiel in materiels %}
+
+{{materiel.type}} {{materiel.nom}} {{materiel.adresse}}  <br>
+    
+{% endfor %}
+
+{% endblock %}

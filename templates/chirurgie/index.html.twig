@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des chirurgies{% endblock %}
+
+{% block body %}
+<h1>Liste des chirurgies</h1>
+
+{% for chirurgie in chirurgies %}
+    {{ chirurgie.intitule }} <br>
+{% endfor %}
+
+{% endblock %}

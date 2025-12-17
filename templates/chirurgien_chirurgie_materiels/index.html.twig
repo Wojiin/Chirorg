@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des chirurgiens et matériels{% endblock %}
+
+{% block body %}
+<h1>Liste des chirurgiens et leurs matériels par chirurgie</h1>
+
+{% for chirurgien in data %}
+    <h2>{{ chirurgien.chirurgien_nom }} {{ chirurgien.chirurgien_prenom }}</h2>
+
+    {% if chirurgien.chirurgies is empty %}
+        <p>Aucune chirurgie ou matériel enregistré pour ce chirurgien.</p>
+    {% else %}
+        <ul>
+            {% for intitule, materiels in chirurgien.chirurgies %}
+                <li>
+                    <strong>{{ intitule }}</strong>
+                    <ul>
+                        {% for materiel in materiels %}
+                            <li>{{ materiel.materiel_nom }} — {{ materiel.materiel_adresse }}</li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endfor %}
+{% endblock %}

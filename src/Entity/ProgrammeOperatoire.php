@@ -35,9 +35,16 @@ class ProgrammeOperatoire
     #[ORM\OneToMany(targetEntity: Chirurgie::class, mappedBy: 'programmeOperatoire')]
     private Collection $programmer;
 
+    /**
+     * @var Collection<int, Chirurgien>
+     */
+    #[ORM\OneToMany(targetEntity: Chirurgien::class, mappedBy: 'operer')]
+    private Collection $chirurgiens;
+
     public function __construct()
     {
         $this->programmer = new ArrayCollection();
+        $this->chirurgiens = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -124,6 +131,36 @@ class ProgrammeOperatoire
             // set the owning side to null (unless already changed)
             if ($programmer->getProgrammeOperatoire() === $this) {
                 $programmer->setProgrammeOperatoire(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Chirurgien>
+     */
+    public function getChirurgiens(): Collection
+    {
+        return $this->chirurgiens;
+    }
+
+    public function addChirurgien(Chirurgien $chirurgien): static
+    {
+        if (!$this->chirurgiens->contains($chirurgien)) {
+            $this->chirurgiens->add($chirurgien);
+            $chirurgien->setOperer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChirurgien(Chirurgien $chirurgien): static
+    {
+        if ($this->chirurgiens->removeElement($chirurgien)) {
+            // set the owning side to null (unless already changed)
+            if ($chirurgien->getOperer() === $this) {
+                $chirurgien->setOperer(null);
             }
         }
 

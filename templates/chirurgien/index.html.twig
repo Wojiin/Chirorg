@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des chirurgiens{% endblock %}
+
+{% block body %}
+<h1>Liste des chirurgiens</h1>
+
+{% for chirurgien in chirurgiens %}
+    {{ chirurgien.prenom }} {{ chirurgien.nom }} ({{chirurgien.specialiser.intitule}})<br>
+{% endfor %}
+
+{% endblock %}

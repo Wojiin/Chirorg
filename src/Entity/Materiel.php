@@ -25,26 +25,19 @@ class Materiel
     private ?string $type = null;
 
     /**
-     * @var Collection<int, ListeMateriel>
+     * @var Collection<int, ChirurgienChirurgieMateriel>
      */
-    #[ORM\ManyToMany(targetEntity: ListeMateriel::class, mappedBy: 'lister')]
-    private Collection $listeMateriels;
+    #[ORM\OneToMany(targetEntity: ChirurgienChirurgieMateriel::class, mappedBy: 'materiel')]
+    private Collection $chirurgienChirurgieMateriels;
 
     public function __construct()
     {
-        $this->listeMateriels = new ArrayCollection();
+        $this->chirurgienChirurgieMateriels = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function setId(int $id): static
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     public function getNom(): ?string
@@ -55,7 +48,6 @@ class Materiel
     public function setNom(string $nom): static
     {
         $this->nom = $nom;
-
         return $this;
     }
 
@@ -67,7 +59,6 @@ class Materiel
     public function setAdresse(string $adresse): static
     {
         $this->adresse = $adresse;
-
         return $this;
     }
 
@@ -79,34 +70,33 @@ class Materiel
     public function setType(string $type): static
     {
         $this->type = $type;
-
         return $this;
     }
 
     /**
-     * @return Collection<int, ListeMateriel>
+     * @return Collection<int, ChirurgienChirurgieMateriel>
      */
-    public function getListeMateriels(): Collection
+    public function getChirurgienChirurgieMateriels(): Collection
     {
-        return $this->listeMateriels;
+        return $this->chirurgienChirurgieMateriels;
     }
 
-    public function addListeMateriel(ListeMateriel $listeMateriel): static
+    public function addChirurgienChirurgieMateriel(ChirurgienChirurgieMateriel $ccm): static
     {
-        if (!$this->listeMateriels->contains($listeMateriel)) {
-            $this->listeMateriels->add($listeMateriel);
-            $listeMateriel->addLister($this);
+        if (!$this->chirurgienChirurgieMateriels->contains($ccm)) {
+            $this->chirurgienChirurgieMateriels->add($ccm);
+            $ccm->setMateriel($this);
         }
-
         return $this;
     }
 
-    public function removeListeMateriel(ListeMateriel $listeMateriel): static
+    public function removeChirurgienChirurgieMateriel(ChirurgienChirurgieMateriel $ccm): static
     {
-        if ($this->listeMateriels->removeElement($listeMateriel)) {
-            $listeMateriel->removeLister($this);
+        if ($this->chirurgienChirurgieMateriels->removeElement($ccm)) {
+            if ($ccm->getMateriel() === $this) {
+                $ccm->setMateriel(null);
+            }
         }
-
         return $this;
     }
 }

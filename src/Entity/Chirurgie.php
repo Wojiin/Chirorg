@@ -26,30 +26,20 @@ class Chirurgie
     #[ORM\JoinColumn(nullable: false)]
     private ?ProgrammeOperatoire $programmeOperatoire = null;
 
-    #[ORM\ManyToOne(inversedBy: 'opérer')]
-    private ?Chirurgien $chirurgien = null;
-
     /**
-     * @var Collection<int, ListeMateriel>
+     * @var Collection<int, ChirurgienChirurgieMateriel>
      */
-    #[ORM\OneToMany(targetEntity: ListeMateriel::class, mappedBy: 'chirurgie', orphanRemoval: true)]
-    private Collection $preparer;
+    #[ORM\OneToMany(targetEntity: ChirurgienChirurgieMateriel::class, mappedBy: 'chirurgie')]
+    private Collection $chirurgienChirurgieMateriels;
 
     public function __construct()
     {
-        $this->preparer = new ArrayCollection();
+        $this->chirurgienChirurgieMateriels = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function setId(int $id): static
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     public function getIntitule(): ?string
@@ -60,7 +50,6 @@ class Chirurgie
     public function setIntitule(string $intitule): static
     {
         $this->intitule = $intitule;
-
         return $this;
     }
 
@@ -72,7 +61,6 @@ class Chirurgie
     public function setFicheTechnique(string $ficheTechnique): static
     {
         $this->ficheTechnique = $ficheTechnique;
-
         return $this;
     }
 
@@ -84,49 +72,33 @@ class Chirurgie
     public function setProgrammeOperatoire(?ProgrammeOperatoire $programmeOperatoire): static
     {
         $this->programmeOperatoire = $programmeOperatoire;
-
-        return $this;
-    }
-
-    public function getChirurgien(): ?Chirurgien
-    {
-        return $this->chirurgien;
-    }
-
-    public function setChirurgien(?Chirurgien $chirurgien): static
-    {
-        $this->chirurgien = $chirurgien;
-
         return $this;
     }
 
     /**
-     * @return Collection<int, ListeMateriel>
+     * @return Collection<int, ChirurgienChirurgieMateriel>
      */
-    public function getPreparer(): Collection
+    public function getChirurgienChirurgieMateriels(): Collection
     {
-        return $this->preparer;
+        return $this->chirurgienChirurgieMateriels;
     }
 
-    public function addPreparer(ListeMateriel $preparer): static
+    public function addChirurgienChirurgieMateriel(ChirurgienChirurgieMateriel $ccm): static
     {
-        if (!$this->preparer->contains($preparer)) {
-            $this->preparer->add($preparer);
-            $preparer->setChirurgie($this);
+        if (!$this->chirurgienChirurgieMateriels->contains($ccm)) {
+            $this->chirurgienChirurgieMateriels->add($ccm);
+            $ccm->setChirurgie($this);
         }
-
         return $this;
     }
 
-    public function removePreparer(ListeMateriel $preparer): static
+    public function removeChirurgienChirurgieMateriel(ChirurgienChirurgieMateriel $ccm): static
     {
-        if ($this->preparer->removeElement($preparer)) {
-            // set the owning side to null (unless already changed)
-            if ($preparer->getChirurgie() === $this) {
-                $preparer->setChirurgie(null);
+        if ($this->chirurgienChirurgieMateriels->removeElement($ccm)) {
+            if ($ccm->getChirurgie() === $this) {
+                $ccm->setChirurgie(null);
             }
         }
-
         return $this;
     }
 }

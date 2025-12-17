@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Specialite;
 use App\Repository\ChirurgieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -23,14 +24,17 @@ class Chirurgie
     private ?string $ficheTechnique = null;
 
     #[ORM\ManyToOne(inversedBy: 'programmer')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?ProgrammeOperatoire $programmeOperatoire = null;
 
     /**
      * @var Collection<int, ChirurgienChirurgieMateriel>
      */
     #[ORM\OneToMany(targetEntity: ChirurgienChirurgieMateriel::class, mappedBy: 'chirurgie')]
-    private Collection $chirurgienChirurgieMateriels;
+    private ?Collection $chirurgienChirurgieMateriels = null;
+
+    #[ORM\ManyToOne(inversedBy: 'chirurgies')]
+    private ?Specialite $specialite = null;
 
     public function __construct()
     {
@@ -99,6 +103,18 @@ class Chirurgie
                 $ccm->setChirurgie(null);
             }
         }
+        return $this;
+    }
+
+    public function getSpecialite(): ?Specialite
+    {
+        return $this->specialite;
+    }
+
+    public function setSpecialite(?Specialite $specialite): static
+    {
+        $this->specialite = $specialite;
+
         return $this;
     }
 }

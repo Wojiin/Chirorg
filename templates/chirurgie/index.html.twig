@@ -4,9 +4,21 @@
 
 {% block body %}
 <h1>Liste des chirurgies</h1>
+<a href="{{ path('chirurgie_new') }}" class="btn btn-success">Ajouter</a>
 
-{% for chirurgie in chirurgies %}
-    {{ chirurgie.intitule }} <br>
+{% for specialite, chirurgies in chirurgiesParSpecialite %}
+    <h2>{{ specialite }}</h2>
+    <ul>
+        {% for chirurgie in chirurgies %}
+            <li>{{ chirurgie.intitule }}</li>
+            <a href="{{ path('chirurgie_edit', {'id': chirurgie.id}) }}">Modifier</a>
+            <form action="{{ path('chirurgie_delete', {'id': chirurgie.id}) }}" method="post" style="display:inline">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ chirurgie.id) }}">
+                <button type="submit">Supprimer</button>
+            </form>
+        {% endfor %}
+    </ul>
 {% endfor %}
+
 
 {% endblock %}

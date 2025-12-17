@@ -6,9 +6,6 @@ use App\Entity\Chirurgie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-/**
- * @extends ServiceEntityRepository<Chirurgie>
- */
 class ChirurgieRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
@@ -16,28 +13,41 @@ class ChirurgieRepository extends ServiceEntityRepository
         parent::__construct($registry, Chirurgie::class);
     }
 
-    //    /**
-    //     * @return Chirurgie[] Returns an array of Chirurgie objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('c.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    /**
+     * Récupère les chirurgies triées par spécialité
+     *
+     * @return array<string, Chirurgie[]>
+     */
+    public function findAllGroupedBySpecialite(): array
+    {
+        $chirurgies = $this->createQueryBuilder('c')
+            ->leftJoin('c.specialite', 's')
+            ->addSelect('s')
+            ->orderBy('s.intitule', 'ASC')
+            ->addOrderBy('c.intitule', 'ASC')
+            ->getQuery()
+            ->getResult();
 
-    //    public function findOneBySomeField($value): ?Chirurgie
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        $chirurgiesParSpecialite = [];
+        foreach ($chirurgies as $chirurgie) {
+            $nomSpecialite = $chirurgie->getSpecialite()?->getIntitule() ?? '—';
+            $chirurgiesParSpecialite[$nomSpecialite][] = $chirurgie;
+        }
+
+        return $chirurgiesParSpecialite;
+    }
+
+    /**
+     * Supprime une chirurgie et ses relations
+     */
+    public function deleteChirurgie(Chirurgie $chirurgie, $entityManager): void
+    {
+        foreach ($chirurgie->getChirurgienChirurgieMateriels() as $ccm) {
+            $entityManager->remove($ccm);
+        }
+
+        $entityManager->remove($chirurgie);
+        $entityManager->flush();
+    }
 }
+

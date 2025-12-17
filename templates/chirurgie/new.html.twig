@@ -1,0 +1,16 @@
+{# templates/chirurgie/new.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter une chirurgie{% endblock %}
+
+{% block body %}
+    <h1>Ajouter une chirurgie</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn btn-success">Ajouter</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('app_chirurgie') }}" class="btn btn-secondary mt-3">Retour à la liste</a>
+{% endblock %}

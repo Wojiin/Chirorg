@@ -1,14 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des spécialités{% endblock %}
+{% block title %}Spécialités{% endblock %}
 
 {% block body %}
 <h1>Liste des spécialités</h1>
 
-{% for specialite in specialites %}
+<a href="{{ path('app_specialite_new') }}" class="btn btn-success mb-3">Ajouter une spécialité</a>
 
-{{specialite.intitule}} <br>
-    
-{% endfor %}
-
+<table class="table">
+    <thead>
+        <tr>
+            <th>Intitulé</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for specialite in specialites %}
+        <tr>
+            <td>{{ specialite.intitule }}</td>
+            <td>
+                <a href="{{ path('app_specialite_edit', {'id': specialite.id}) }}" class="btn btn-sm btn-primary">Modifier</a>
+                <form action="{{ path('app_specialite_delete', {'id': specialite.id}) }}" method="post" style="display:inline">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ specialite.id) }}">
+                    <button class="btn btn-sm btn-danger">Supprimer</button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

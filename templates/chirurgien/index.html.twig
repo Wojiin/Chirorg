@@ -1,12 +1,38 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des chirurgiens{% endblock %}
+{% block title %}Chirurgiens{% endblock %}
 
 {% block body %}
-<h1>Liste des chirurgiens</h1>
+<h1>Liste des chirurgiens par spécialité</h1>
 
-{% for chirurgien in chirurgiens %}
-    {{ chirurgien.prenom }} {{ chirurgien.nom }} ({{chirurgien.specialiser.intitule}})<br>
+<a href="{{ path('app_chirurgien_new') }}" class="btn btn-success mb-3">Ajouter un chirurgien</a>
+
+{% for specialite, chirurgiens in chirurgiensParSpecialite %}
+    <h2>{{ specialite }}</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for chirurgien in chirurgiens %}
+            <tr>
+                <td>{{ chirurgien.nom }}</td>
+                <td>{{ chirurgien.prenom }}</td>
+                <td>
+                    <a href="{{ path('app_chirurgien_edit', {'id': chirurgien.id}) }}" class="btn btn-sm btn-primary">Modifier</a>
+                    <form action="{{ path('app_chirurgien_delete', {'id': chirurgien.id}) }}" method="post" style="display:inline">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ chirurgien.id) }}">
+                        <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endfor %}
 
 {% endblock %}

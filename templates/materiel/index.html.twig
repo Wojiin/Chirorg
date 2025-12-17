@@ -1,14 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste du matériel{% endblock %}
+{% block title %}Matériel{% endblock %}
 
 {% block body %}
 <h1>Liste du matériel</h1>
 
-{% for materiel in materiels %}
+<a href="{{ path('materiel_new') }}" class="btn btn-success mb-3">Ajouter un matériel</a>
 
-{{materiel.type}} {{materiel.nom}} {{materiel.adresse}}  <br>
-    
+{% for specialite, materiels in materielsParSpecialite %}
+    <h2>{{ specialite }}</h2>
+    <ul>
+        {% for materiel in materiels %}
+            <li>
+                {{ materiel.nom }} ({{ materiel.type }}) - {{ materiel.adresse }}
+                <a href="{{ path('materiel_edit', {'id': materiel.id}) }}" class="btn btn-sm btn-primary">Modifier</a>
+                <form action="{{ path('materiel_delete', {'id': materiel.id}) }}" method="post" style="display:inline">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ materiel.id) }}">
+                    <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
 {% endfor %}
 
 {% endblock %}

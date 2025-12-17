@@ -24,9 +24,23 @@ class Specialite
     #[ORM\OneToMany(targetEntity: Chirurgien::class, mappedBy: 'specialiser')]
     private Collection $chirurgiens;
 
+    /**
+     * @var Collection<int, Chirurgie>
+     */
+    #[ORM\OneToMany(targetEntity: Chirurgie::class, mappedBy: 'specialite')]
+    private Collection $chirurgies;
+
+    /**
+     * @var Collection<int, Materiel>
+     */
+    #[ORM\OneToMany(targetEntity: Materiel::class, mappedBy: 'specialite')]
+    private Collection $materiels;
+
     public function __construct()
     {
         $this->chirurgiens = new ArrayCollection();
+        $this->chirurgies = new ArrayCollection();
+        $this->materiels = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -77,6 +91,66 @@ class Specialite
             // set the owning side to null (unless already changed)
             if ($chirurgien->getSpecialiser() === $this) {
                 $chirurgien->setSpecialiser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Chirurgie>
+     */
+    public function getChirurgies(): Collection
+    {
+        return $this->chirurgies;
+    }
+
+    public function addChirurgy(Chirurgie $chirurgy): static
+    {
+        if (!$this->chirurgies->contains($chirurgy)) {
+            $this->chirurgies->add($chirurgy);
+            $chirurgy->setSpecialite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChirurgy(Chirurgie $chirurgy): static
+    {
+        if ($this->chirurgies->removeElement($chirurgy)) {
+            // set the owning side to null (unless already changed)
+            if ($chirurgy->getSpecialite() === $this) {
+                $chirurgy->setSpecialite(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Materiel>
+     */
+    public function getMateriels(): Collection
+    {
+        return $this->materiels;
+    }
+
+    public function addMateriel(Materiel $materiel): static
+    {
+        if (!$this->materiels->contains($materiel)) {
+            $this->materiels->add($materiel);
+            $materiel->setSpecialite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMateriel(Materiel $materiel): static
+    {
+        if ($this->materiels->removeElement($materiel)) {
+            // set the owning side to null (unless already changed)
+            if ($materiel->getSpecialite() === $this) {
+                $materiel->setSpecialite(null);
             }
         }
 

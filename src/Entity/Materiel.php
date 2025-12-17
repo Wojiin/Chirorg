@@ -30,6 +30,9 @@ class Materiel
     #[ORM\OneToMany(targetEntity: ChirurgienChirurgieMateriel::class, mappedBy: 'materiel')]
     private Collection $chirurgienChirurgieMateriels;
 
+    #[ORM\ManyToOne(inversedBy: 'materiels')]
+    private ?Specialite $specialite = null;
+
     public function __construct()
     {
         $this->chirurgienChirurgieMateriels = new ArrayCollection();
@@ -97,6 +100,18 @@ class Materiel
                 $ccm->setMateriel(null);
             }
         }
+        return $this;
+    }
+
+    public function getSpecialite(): ?Specialite
+    {
+        return $this->specialite;
+    }
+
+    public function setSpecialite(?Specialite $specialite): static
+    {
+        $this->specialite = $specialite;
+
         return $this;
     }
 }

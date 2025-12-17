@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\ListeMateriel;
 use App\Entity\Materiel;
 use App\Entity\Specialite;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -14,15 +15,19 @@ class MaterielType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom')
+            ->add('intitule')
             ->add('type')
             ->add('adresse')
-            ->add('specialite', EntityType::class, [
+            ->add('classer', EntityType::class, [
                 'class' => Specialite::class,
-                'choice_label' => 'intitule',
-                'required' => false,
-                'placeholder' => 'Sélectionner une spécialité',
-            ]);
+                'choice_label' => 'id',
+            ])
+            ->add('lister', EntityType::class, [
+                'class' => ListeMateriel::class,
+                'choice_label' => 'id',
+                'multiple' => true,
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -42,15 +42,17 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $nom = null;
 
     /**
-     * @var Collection<int, ProgrammeOperatoire>
+     * @var Collection<int, Chirurgie>
      */
-    #[ORM\OneToMany(targetEntity: ProgrammeOperatoire::class, mappedBy: 'organiser', orphanRemoval: true)]
-    private Collection $programmeOperatoires;
+    #[ORM\OneToMany(targetEntity: Chirurgie::class, mappedBy: 'utilisateur')]
+    private Collection $organiser;
 
     public function __construct()
     {
-        $this->programmeOperatoires = new ArrayCollection();
+        $this->organiser = new ArrayCollection();
     }
+
+
 
     public function getId(): ?int
     {
@@ -158,32 +160,33 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, ProgrammeOperatoire>
+     * @return Collection<int, Chirurgie>
      */
-    public function getProgrammeOperatoires(): Collection
+    public function getOrganiser(): Collection
     {
-        return $this->programmeOperatoires;
+        return $this->organiser;
     }
 
-    public function addProgrammeOperatoire(ProgrammeOperatoire $programmeOperatoire): static
+    public function addOrganiser(Chirurgie $organiser): static
     {
-        if (!$this->programmeOperatoires->contains($programmeOperatoire)) {
-            $this->programmeOperatoires->add($programmeOperatoire);
-            $programmeOperatoire->setOrganiser($this);
+        if (!$this->organiser->contains($organiser)) {
+            $this->organiser->add($organiser);
+            $organiser->setUtilisateur($this);
         }
 
         return $this;
     }
 
-    public function removeProgrammeOperatoire(ProgrammeOperatoire $programmeOperatoire): static
+    public function removeOrganiser(Chirurgie $organiser): static
     {
-        if ($this->programmeOperatoires->removeElement($programmeOperatoire)) {
+        if ($this->organiser->removeElement($organiser)) {
             // set the owning side to null (unless already changed)
-            if ($programmeOperatoire->getOrganiser() === $this) {
-                $programmeOperatoire->setOrganiser(null);
+            if ($organiser->getUtilisateur() === $this) {
+                $organiser->setUtilisateur(null);
             }
         }
 
         return $this;
     }
+
 }

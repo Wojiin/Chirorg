@@ -2,10 +2,7 @@
 
 namespace App\Entity;
 
-use App\Entity\Specialite;
 use App\Repository\ChirurgieRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -17,34 +14,37 @@ class Chirurgie
     #[ORM\Column]
     private ?int $id = null;
 
+
     #[ORM\Column(length: 255)]
     private ?string $intitule = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $ficheTechnique = null;
+    private ?string $fiche_technique = null;
 
-    #[ORM\ManyToOne(inversedBy: 'programmer')]
-    #[ORM\JoinColumn(nullable: true)]
-    private ?ProgrammeOperatoire $programmeOperatoire = null;
+    #[ORM\Column]
+    private ?\DateTime $date = null;
 
-    /**
-     * @var Collection<int, ChirurgienChirurgieMateriel>
-     */
-    #[ORM\OneToMany(targetEntity: ChirurgienChirurgieMateriel::class, mappedBy: 'chirurgie')]
-    private ?Collection $chirurgienChirurgieMateriels = null;
+    #[ORM\Column(length: 50)]
+    private ?string $salle = null;
+
+    #[ORM\Column]
+    private ?bool $valide = null;
+
+    #[ORM\ManyToOne(inversedBy: 'organiser')]
+    private ?Utilisateur $utilisateur = null;
+
+    #[ORM\ManyToOne(inversedBy: 'outiller')]
+    private ?Chirurgien $operer = null;
 
     #[ORM\ManyToOne(inversedBy: 'chirurgies')]
-    private ?Specialite $specialite = null;
-
-    public function __construct()
-    {
-        $this->chirurgienChirurgieMateriels = new ArrayCollection();
-    }
+    private ?ListeMateriel $outiller = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
+
+
 
     public function getIntitule(): ?string
     {
@@ -54,66 +54,90 @@ class Chirurgie
     public function setIntitule(string $intitule): static
     {
         $this->intitule = $intitule;
+
         return $this;
     }
 
     public function getFicheTechnique(): ?string
     {
-        return $this->ficheTechnique;
+        return $this->fiche_technique;
     }
 
-    public function setFicheTechnique(string $ficheTechnique): static
+    public function setFicheTechnique(string $fiche_technique): static
     {
-        $this->ficheTechnique = $ficheTechnique;
+        $this->fiche_technique = $fiche_technique;
+
         return $this;
     }
 
-    public function getProgrammeOperatoire(): ?ProgrammeOperatoire
+    public function getDate(): ?\DateTime
     {
-        return $this->programmeOperatoire;
+        return $this->date;
     }
 
-    public function setProgrammeOperatoire(?ProgrammeOperatoire $programmeOperatoire): static
+    public function setDate(\DateTime $date): static
     {
-        $this->programmeOperatoire = $programmeOperatoire;
+        $this->date = $date;
+
         return $this;
     }
 
-    /**
-     * @return Collection<int, ChirurgienChirurgieMateriel>
-     */
-    public function getChirurgienChirurgieMateriels(): Collection
+    public function getSalle(): ?string
     {
-        return $this->chirurgienChirurgieMateriels;
+        return $this->salle;
     }
 
-    public function addChirurgienChirurgieMateriel(ChirurgienChirurgieMateriel $ccm): static
+    public function setSalle(string $salle): static
     {
-        if (!$this->chirurgienChirurgieMateriels->contains($ccm)) {
-            $this->chirurgienChirurgieMateriels->add($ccm);
-            $ccm->setChirurgie($this);
-        }
+        $this->salle = $salle;
+
         return $this;
     }
 
-    public function removeChirurgienChirurgieMateriel(ChirurgienChirurgieMateriel $ccm): static
+    public function isValide(): ?bool
     {
-        if ($this->chirurgienChirurgieMateriels->removeElement($ccm)) {
-            if ($ccm->getChirurgie() === $this) {
-                $ccm->setChirurgie(null);
-            }
-        }
+        return $this->valide;
+    }
+
+    public function setValide(bool $valide): static
+    {
+        $this->valide = $valide;
+
         return $this;
     }
 
-    public function getSpecialite(): ?Specialite
+    public function getUtilisateur(): ?Utilisateur
     {
-        return $this->specialite;
+        return $this->utilisateur;
     }
 
-    public function setSpecialite(?Specialite $specialite): static
+    public function setUtilisateur(?Utilisateur $utilisateur): static
     {
-        $this->specialite = $specialite;
+        $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
+    public function getOperer(): ?Chirurgien
+    {
+        return $this->operer;
+    }
+
+    public function setOperer(?Chirurgien $operer): static
+    {
+        $this->operer = $operer;
+
+        return $this;
+    }
+
+    public function getOutiller(): ?ListeMateriel
+    {
+        return $this->outiller;
+    }
+
+    public function setOutiller(?ListeMateriel $outiller): static
+    {
+        $this->outiller = $outiller;
 
         return $this;
     }

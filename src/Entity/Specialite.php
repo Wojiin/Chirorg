@@ -15,6 +15,8 @@ class Specialite
     #[ORM\Column]
     private ?int $id = null;
 
+
+
     #[ORM\Column(length: 255)]
     private ?string $intitule = null;
 
@@ -25,21 +27,14 @@ class Specialite
     private Collection $chirurgiens;
 
     /**
-     * @var Collection<int, Chirurgie>
-     */
-    #[ORM\OneToMany(targetEntity: Chirurgie::class, mappedBy: 'specialite')]
-    private Collection $chirurgies;
-
-    /**
      * @var Collection<int, Materiel>
      */
-    #[ORM\OneToMany(targetEntity: Materiel::class, mappedBy: 'specialite')]
+    #[ORM\OneToMany(targetEntity: Materiel::class, mappedBy: 'classer')]
     private Collection $materiels;
 
     public function __construct()
     {
         $this->chirurgiens = new ArrayCollection();
-        $this->chirurgies = new ArrayCollection();
         $this->materiels = new ArrayCollection();
     }
 
@@ -48,12 +43,7 @@ class Specialite
         return $this->id;
     }
 
-    public function setId(int $id): static
-    {
-        $this->id = $id;
 
-        return $this;
-    }
 
     public function getIntitule(): ?string
     {
@@ -98,36 +88,6 @@ class Specialite
     }
 
     /**
-     * @return Collection<int, Chirurgie>
-     */
-    public function getChirurgies(): Collection
-    {
-        return $this->chirurgies;
-    }
-
-    public function addChirurgy(Chirurgie $chirurgy): static
-    {
-        if (!$this->chirurgies->contains($chirurgy)) {
-            $this->chirurgies->add($chirurgy);
-            $chirurgy->setSpecialite($this);
-        }
-
-        return $this;
-    }
-
-    public function removeChirurgy(Chirurgie $chirurgy): static
-    {
-        if ($this->chirurgies->removeElement($chirurgy)) {
-            // set the owning side to null (unless already changed)
-            if ($chirurgy->getSpecialite() === $this) {
-                $chirurgy->setSpecialite(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Materiel>
      */
     public function getMateriels(): Collection
@@ -139,7 +99,7 @@ class Specialite
     {
         if (!$this->materiels->contains($materiel)) {
             $this->materiels->add($materiel);
-            $materiel->setSpecialite($this);
+            $materiel->setClasser($this);
         }
 
         return $this;
@@ -149,8 +109,8 @@ class Specialite
     {
         if ($this->materiels->removeElement($materiel)) {
             // set the owning side to null (unless already changed)
-            if ($materiel->getSpecialite() === $this) {
-                $materiel->setSpecialite(null);
+            if ($materiel->getClasser() === $this) {
+                $materiel->setClasser(null);
             }
         }
 

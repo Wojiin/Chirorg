@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1>{{ chirurgie.intitule }}</h1>
+
+<p>
+    <strong>Date :</strong>
+    {{ chirurgie.date ? chirurgie.date|date('d/m/Y H:i') : '—' }}
+</p>
+
+<p>
+    <strong>Salle :</strong>
+    {{ chirurgie.salle ?? '—' }}
+</p>
+
+
+
+<h2>Matériel utilisé</h2>
+
+{% if chirurgie.outiller %}
+    <h3>Liste : {{ chirurgie.outiller.intitule }}</h3>
+
+    {% if chirurgie.outiller.materiels|length > 0 %}
+        <ul>
+            {% for materiel in chirurgie.outiller.materiels %}
+                <li>
+                    <strong>{{ materiel.intitule }}</strong><br>
+                     {{ materiel.adresse }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucun matériel dans cette liste.</p>
+    {% endif %}
+{% else %}
+    <p>Aucune liste de matériel associée à cette chirurgie.</p>
+{% endif %}
+
+<a href="{{ path('chirurgie_index') }}">⬅ Retour</a>
+{% endblock %}

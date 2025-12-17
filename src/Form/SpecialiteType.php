@@ -12,7 +12,8 @@ class SpecialiteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('intitule');
+            ->add('intitule')
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

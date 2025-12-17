@@ -2,32 +2,32 @@
 
 namespace App\Form;
 
+use App\Entity\ListeMateriel;
 use App\Entity\Chirurgien;
-use App\Entity\Specialite;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-class ChirurgienType extends AbstractType
+class ListeMaterielType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('prenom', TextType::class)
-            ->add('nom', TextType::class)
-            ->add('specialiser', EntityType::class, [
-                'class' => Specialite::class,
-                'choice_label' => 'intitule',
-                'placeholder' => '— Choisir une spécialité —'
+            ->add('intitule', TextType::class)
+            ->add('chirurgien', EntityType::class, [
+                'class' => Chirurgien::class,
+                'choice_label' => fn (Chirurgien $c) =>
+                    $c->getPrenom().' '.$c->getNom(),
+                'placeholder' => '— Choisir un chirurgien —'
             ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Chirurgien::class,
+            'data_class' => ListeMateriel::class,
         ]);
     }
 }

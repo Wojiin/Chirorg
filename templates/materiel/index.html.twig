@@ -1,26 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Matériel{% endblock %}
+{% block title %}Hello MaterielController!{% endblock %}
 
 {% block body %}
-<h1>Liste du matériel</h1>
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
 
-<a href="{{ path('materiel_new') }}" class="btn btn-success mb-3">Ajouter un matériel</a>
+<div class="example-wrapper">
+    <h1>Hello {{ controller_name }}! ✅</h1>
 
-{% for specialite, materiels in materielsParSpecialite %}
-    <h2>{{ specialite }}</h2>
+    This friendly message is coming from:
     <ul>
-        {% for materiel in materiels %}
-            <li>
-                {{ materiel.nom }} ({{ materiel.type }}) - {{ materiel.adresse }}
-                <a href="{{ path('materiel_edit', {'id': materiel.id}) }}" class="btn btn-sm btn-primary">Modifier</a>
-                <form action="{{ path('materiel_delete', {'id': materiel.id}) }}" method="post" style="display:inline">
-                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ materiel.id) }}">
-                    <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
-                </form>
-            </li>
-        {% endfor %}
+        <li>Your controller at <code>C:/laragon/www/Quentin_MAIA/Projet/Chirorg/src/Controller/MaterielController.php</code></li>
+        <li>Your template at <code>C:/laragon/www/Quentin_MAIA/Projet/Chirorg/templates/materiel/index.html.twig</code></li>
     </ul>
-{% endfor %}
-
+</div>
 {% endblock %}

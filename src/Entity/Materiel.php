@@ -15,27 +15,29 @@ class Materiel
     #[ORM\Column]
     private ?int $id = null;
 
+
+
     #[ORM\Column(length: 255)]
-    private ?string $nom = null;
+    private ?string $intitule = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $type = null;
 
     #[ORM\Column(length: 255)]
     private ?string $adresse = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $type = null;
+    #[ORM\ManyToOne(inversedBy: 'materiels')]
+    private ?Specialite $classer = null;
 
     /**
-     * @var Collection<int, ChirurgienChirurgieMateriel>
+     * @var Collection<int, ListeMateriel>
      */
-    #[ORM\OneToMany(targetEntity: ChirurgienChirurgieMateriel::class, mappedBy: 'materiel')]
-    private Collection $chirurgienChirurgieMateriels;
-
-    #[ORM\ManyToOne(inversedBy: 'materiels')]
-    private ?Specialite $specialite = null;
+    #[ORM\ManyToMany(targetEntity: ListeMateriel::class, inversedBy: 'materiels')]
+    private Collection $lister;
 
     public function __construct()
     {
-        $this->chirurgienChirurgieMateriels = new ArrayCollection();
+        $this->lister = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -43,25 +45,17 @@ class Materiel
         return $this->id;
     }
 
-    public function getNom(): ?string
+
+
+    public function getIntitule(): ?string
     {
-        return $this->nom;
+        return $this->intitule;
     }
 
-    public function setNom(string $nom): static
+    public function setIntitule(string $intitule): static
     {
-        $this->nom = $nom;
-        return $this;
-    }
+        $this->intitule = $intitule;
 
-    public function getAdresse(): ?string
-    {
-        return $this->adresse;
-    }
-
-    public function setAdresse(string $adresse): static
-    {
-        $this->adresse = $adresse;
         return $this;
     }
 
@@ -73,44 +67,54 @@ class Materiel
     public function setType(string $type): static
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getAdresse(): ?string
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(string $adresse): static
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    public function getClasser(): ?Specialite
+    {
+        return $this->classer;
+    }
+
+    public function setClasser(?Specialite $classer): static
+    {
+        $this->classer = $classer;
+
         return $this;
     }
 
     /**
-     * @return Collection<int, ChirurgienChirurgieMateriel>
+     * @return Collection<int, ListeMateriel>
      */
-    public function getChirurgienChirurgieMateriels(): Collection
+    public function getLister(): Collection
     {
-        return $this->chirurgienChirurgieMateriels;
+        return $this->lister;
     }
 
-    public function addChirurgienChirurgieMateriel(ChirurgienChirurgieMateriel $ccm): static
+    public function addLister(ListeMateriel $lister): static
     {
-        if (!$this->chirurgienChirurgieMateriels->contains($ccm)) {
-            $this->chirurgienChirurgieMateriels->add($ccm);
-            $ccm->setMateriel($this);
+        if (!$this->lister->contains($lister)) {
+            $this->lister->add($lister);
         }
+
         return $this;
     }
 
-    public function removeChirurgienChirurgieMateriel(ChirurgienChirurgieMateriel $ccm): static
+    public function removeLister(ListeMateriel $lister): static
     {
-        if ($this->chirurgienChirurgieMateriels->removeElement($ccm)) {
-            if ($ccm->getMateriel() === $this) {
-                $ccm->setMateriel(null);
-            }
-        }
-        return $this;
-    }
-
-    public function getSpecialite(): ?Specialite
-    {
-        return $this->specialite;
-    }
-
-    public function setSpecialite(?Specialite $specialite): static
-    {
-        $this->specialite = $specialite;
+        $this->lister->removeElement($lister);
 
         return $this;
     }

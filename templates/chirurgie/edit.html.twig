@@ -1,16 +1,12 @@
-{# templates/chirurgie/edit.html.twig #}
-
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier Chirurgie{% endblock %}
-
 {% block body %}
-    <h1>Modifier Chirurgie</h1>
+<h1>{{ chirurgie.id ? 'Modifier' : 'Créer' }} une chirurgie</h1>
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <button class="btn btn-primary">Enregistrer</button>
-    {{ form_end(form) }}
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button>Enregistrer</button>
+{{ form_end(form) }}
 
-    <a href="{{ path('app_chirurgie') }}" class="btn btn-secondary mt-3">Retour à la liste</a>
+<a href="{{ path('chirurgie_index') }}">⬅ Retour</a>
 {% endblock %}

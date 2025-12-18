@@ -1,59 +1,91 @@
-{% extends 'base.html.twig' %}
+{% extends 'base.html.twig' %} {# Bloc principal du contenu de la page #} {%
+block body %}
 
-{% block body %}
 <h1>Planning des chirurgies</h1>
 
+{# Lien vers la page de création d'une nouvelle chirurgie #}
 <a href="{{ path('chirurgie_new') }}">Créer une chirurgie</a>
 
-{% for specialite, chirurgiens in grouped_chirurgies %}
-    <h2>{{ specialite }}</h2>
+{# Vérifie s'il existe au moins une chirurgie regroupée #} {% for specialiteId,
+specialiteData in grouped_chirurgies %} {# Affichage de la spécialité (niveau 1
+de regroupement) #}
+<h2>
+    <a href="{{ path('specialite_show', { id: specialiteId }) }}">
+        {{ specialiteData.label }}
+    </a>
+</h2>
 
-    {% for chirurgien, salles in chirurgiens %}
-        {% for salle, chirurgies in salles %}
-            <h3>{{ chirurgien }} — {{ salle }}</h3>
+{# Parcourt les chirurgiens associés à cette spécialité #} {% for chirurgienId,
+chirurgienData in specialiteData.chirurgiens %} {# Affichage du chirurgien
+(niveau 2 de regroupement) #}
+<h3>
+    <a href="{{ path('chirurgien_show', { id: chirurgienId }) }}">
+        {{ chirurgienData.label }}
+    </a>
+</h3>
 
-            <ul>
-                {% for chirurgie in chirurgies %}
-                    <li>
-                        <strong>{{ chirurgie.intitule }}</strong><br>
+{# Parcourt les salles dans lesquelles le chirurgien opère #} {% for salle,
+chirurgies in chirurgienData.salles %} {# Affichage du nom de la salle #}
+<h4>{{ salle }}</h4>
 
-                        {{ chirurgie.date ? chirurgie.date|date('d/m/Y H:i') : 'Date non définie' }}
+<ul>
+    {# Parcourt toutes les chirurgies associées à cette salle #} {% for
+    chirurgie in chirurgies %}
+    <li>
+        {# Intitulé de la chirurgie avec lien vers la page détail #}
+        <strong>
+            <a href="{{ path('chirurgie_show', { id: chirurgie.id }) }}">
+                {{ chirurgie.intitule }}
+            </a>
+        </strong>
+        <br />
 
-                        <br>
+        {# Affichage de la date de la chirurgie ou message par défaut #}
+        {{ chirurgie.date
+                            ? chirurgie.date|date('d/m/Y H:i')
+                            : 'Date non définie'
+        }}
+        <br />
 
-                        {% if chirurgie.valide %}
-                            Chirurgie validée
-                        {% else %}
-                            En attente de validation
-                        {% endif %}
+        {# Affichage de l'état de validation de la chirurgie #} {% if
+        chirurgie.valide %} Chirurgie validée {% else %} En attente de
+        validation {% endif %}
+        <br />
 
-                        <br>
+        {# Affichage de la liste de matériel associée si elle existe #} {% if
+        chirurgie.outiller %} Liste matériel :
+        <a
+            href="{{
+                path('liste_materiel_show', { id: chirurgie.outiller.id })
+            }}"
+        >
+            {{ chirurgie.outiller.intitule }}
+        </a>
+        {% else %} Aucun matériel associé {% endif %}
+        <br />
 
-                        {% if chirurgie.outiller %}
-                            {{ chirurgie.outiller.intitule }}
-                        {% else %}
-                            Aucun matériel associé
-                        {% endif %}
-
-                        <br>
-
-                        <a href="{{ path('chirurgie_show', {id: chirurgie.id}) }}">Voir</a>
-                        |
-                        <a href="{{ path('chirurgie_edit', {id: chirurgie.id}) }}">Modifier</a>
-                        |
-                        <form method="post"
-                              action="{{ path('chirurgie_delete', {id: chirurgie.id}) }}"
-                              style="display:inline">
-                            <input type="hidden" name="_token"
-                                   value="{{ csrf_token('delete' ~ chirurgie.id) }}">
-                            <button type="submit">Supprimer</button>
-                        </form>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% endfor %}
+        {# Lien vers la page de modification de la chirurgie #}
+        <a href="{{ path('chirurgie_edit', { id: chirurgie.id }) }}">
+            Modifier
+        </a>
+        | {# Formulaire de suppression sécurisé avec token CSRF #}
+        <form
+            method="post"
+            action="{{ path('chirurgie_delete', { id: chirurgie.id }) }}"
+            style="display: inline"
+        >
+            <input
+                type="hidden"
+                name="_token"
+                value="{{ csrf_token('delete' ~ chirurgie.id) }}"
+            />
+            <button type="submit">Supprimer</button>
+        </form>
+    </li>
     {% endfor %}
-{% else %}
-    <p>Aucune chirurgie enregistrée.</p>
-{% endfor %}
-{% endblock %}
+</ul>
+
+{% endfor %} {% endfor %} {# Bloc exécuté si grouped_chirurgies est vide #} {%
+else %}
+<p>Aucune chirurgie enregistrée.</p>
+{% endfor %} {% endblock %}

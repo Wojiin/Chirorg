@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %} {# Bloc principal du contenu de la page #} {%
+block body %} {# Titre dynamique : - "Créer" si la spécialité n'a pas encore
+d'id - "Modifier" si la spécialité existe déjà #}
+<h1>{{ specialite.id ? "Modifier" : "Créer" }} une spécialité</h1>
+
+{# Début du formulaire Symfony - ouvre la balise
+<form>
+    - ajoute automatiquement le token CSRF - définit la méthode et l'action #}
+    {{ form_start(form) }}
+
+    {# Affiche automatiquement tous les champs définis dans SpecialiteType #}
+    {{ form_widget(form) }}
+
+    {# Bouton de soumission du formulaire #}
+    <button>Enregistrer</button>
+
+    {# Fin du formulaire Symfony #}
+    {{ form_end(form) }}
+
+    {# Lien de retour vers la liste des spécialités #}
+    <a href="{{ path('specialite_index') }}">⬅ Retour</a>
+
+    {% endblock %}
+</form>

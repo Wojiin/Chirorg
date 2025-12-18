@@ -1,12 +1,21 @@
-{% extends 'base.html.twig' %}
+{% extends 'base.html.twig' %} {# Bloc principal du contenu de la page #} {%
+block body %} {# Titre dynamique : "Créer" si pas d'id, "Modifier" si la
+chirurgie existe déjà #}
+<h1>{{ chirurgie.id ? "Modifier" : "Créer" }} une chirurgie</h1>
 
-{% block body %}
-<h1>{{ chirurgie.id ? 'Modifier' : 'Créer' }} une chirurgie</h1>
-
+{# Début du formulaire Symfony #}
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button>Enregistrer</button>
+
+{# Affiche automatiquement tous les champs du formulaire #}
+{{ form_widget(form) }}
+
+{# Bouton de soumission du formulaire #}
+<button>Enregistrer</button>
+
+{# Fin du formulaire Symfony #}
 {{ form_end(form) }}
 
+{# Lien de retour vers la liste des chirurgies #}
 <a href="{{ path('chirurgie_index') }}">⬅ Retour</a>
+
 {% endblock %}

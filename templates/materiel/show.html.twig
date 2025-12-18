@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %} {# Bloc principal du contenu de la page #} {%
+block body %} {# Titre de la page : intitulé du matériel #}
+<h1>{{ materiel.intitule }}</h1>
+
+{# Affichage du type du matériel #}
+<p>
+    <strong>Type :</strong>
+    {{ materiel.type }}
+</p>
+
+{# Affichage de l'adresse / emplacement du matériel #}
+<p>
+    <strong>Adresse :</strong>
+    {{ materiel.adresse }}
+</p>
+
+{# Affichage de la spécialité associée ou d'un tiret si absente #}
+<p>
+    <strong>Spécialité :</strong>
+    {{ materiel.classer ? materiel.classer.intitule : "—" }}
+</p>
+
+{# Section dédiée aux listes de matériel associées #}
+<h2>Listes associées</h2>
+
+{# Vérifie si le matériel est lié à au moins une liste #} {% if
+materiel.lister|length > 0 %}
+
+<ul>
+    {# Parcourt toutes les listes associées au matériel #} {% for l in
+    materiel.lister %}
+    <li>
+        {# Affiche l'intitulé de la liste #}
+        {{ l.intitule }}
+    </li>
+    {% endfor %}
+</ul>
+
+{% else %} {# Message affiché si aucune liste n'est associée #}
+<p>Aucune liste associée.</p>
+{% endif %} {# Lien de retour vers la liste des matériels #}
+<a href="{{ path('materiel_index') }}">⬅ Retour</a>
+
+{% endblock %}

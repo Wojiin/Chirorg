@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %} {# Bloc principal du contenu de la page #} {%
+block body %} {# Affiche l'intitulé de la spécialité en titre #}
+<h1>{{ specialite.intitule }}</h1>
+
+{# Lien de retour vers la liste des spécialités #}
+<a href="{{ path('specialite_index') }}">⬅ Retour</a>
+
+{% endblock %}

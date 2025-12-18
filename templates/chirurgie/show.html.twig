@@ -1,40 +1,48 @@
-{% extends 'base.html.twig' %}
-
-{% block body %}
+{% extends 'base.html.twig' %} {# Bloc principal du contenu de la page #} {%
+block body %} {# Affiche l'intitulé de la chirurgie en titre #}
 <h1>{{ chirurgie.intitule }}</h1>
 
+{# Affichage de la date de la chirurgie (formatée) ou d'un tiret si absente #}
 <p>
     <strong>Date :</strong>
     {{ chirurgie.date ? chirurgie.date|date('d/m/Y H:i') : '—' }}
 </p>
 
+{# Affichage de la salle ou d'un tiret si non définie #}
 <p>
     <strong>Salle :</strong>
-    {{ chirurgie.salle ?? '—' }}
+    {{ chirurgie.salle ?? "—" }}
 </p>
 
-
-
+{# Section dédiée au matériel utilisé pour la chirurgie #}
 <h2>Matériel utilisé</h2>
 
-{% if chirurgie.outiller %}
-    <h3>Liste : {{ chirurgie.outiller.intitule }}</h3>
+{# Vérifie si une liste de matériel est associée à la chirurgie #} {% if
+chirurgie.outiller %} {# Affiche le titre de la liste de matériel #}
+<h3>Liste : {{ chirurgie.outiller.intitule }}</h3>
 
-    {% if chirurgie.outiller.materiels|length > 0 %}
-        <ul>
-            {% for materiel in chirurgie.outiller.materiels %}
-                <li>
-                    <strong>{{ materiel.intitule }}</strong><br>
-                     {{ materiel.adresse }}
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>Aucun matériel dans cette liste.</p>
-    {% endif %}
-{% else %}
-    <p>Aucune liste de matériel associée à cette chirurgie.</p>
-{% endif %}
+{# Vérifie si la liste contient au moins un matériel #} {% if
+chirurgie.outiller.materiels|length > 0 %} {# Parcourt tous les matériels de la
+liste associée #}
+<ul>
+    {% for materiel in chirurgie.outiller.materiels %}
+    <li>
+        {# Affiche l'intitulé du matériel #}
+        <strong>{{ materiel.intitule }}</strong
+        ><br />
 
+        {# Affiche l'adresse / l'emplacement du matériel #}
+        {{ materiel.adresse }}
+    </li>
+    {% endfor %}
+</ul>
+
+{% else %} {# Message affiché si la liste ne contient aucun matériel #}
+<p>Aucun matériel dans cette liste.</p>
+{% endif %} {% else %} {# Message affiché si aucune liste de matériel n'est
+associée à la chirurgie #}
+<p>Aucune liste de matériel associée à cette chirurgie.</p>
+{% endif %} {# Lien de retour vers la liste des chirurgies #}
 <a href="{{ path('chirurgie_index') }}">⬅ Retour</a>
+
 {% endblock %}

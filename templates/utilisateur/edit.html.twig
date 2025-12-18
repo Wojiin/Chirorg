@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %} {# Bloc principal du contenu de la page #} {%
+block body %} {# Titre de la page : modification d'un utilisateur existant #}
+<h1>Modifier un utilisateur</h1>
+
+{# Début du formulaire Symfony - ouvre la balise
+<form>
+    - ajoute automatiquement le token CSRF - définit la méthode et l'action #}
+    {{ form_start(form) }}
+
+    {# Affiche automatiquement tous les champs définis dans UtilisateurType #}
+    {{ form_widget(form) }}
+
+    {# Bouton de soumission du formulaire #}
+    <button>Enregistrer</button>
+
+    {# Fin du formulaire Symfony #}
+    {{ form_end(form) }}
+
+    {# Lien de retour vers la liste des utilisateurs #}
+    <a href="{{ path('utilisateur_index') }}">⬅ Retour</a>
+
+    {% endblock %}
+</form>

@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %} {# Bloc principal du contenu de la page #} {%
+block body %} {# Affiche le prénom et le nom du chirurgien en titre #}
+<h1>{{ chirurgien.prenom }} {{ chirurgien.nom }}</h1>
+
+{# Affichage de la spécialité du chirurgien si elle existe #}
+<p>
+    <strong>Spécialité :</strong>
+    {{ chirurgien.specialiser ? chirurgien.specialiser.intitule : "—" }}
+</p>
+
+{# Lien de retour vers la liste des chirurgiens #}
+<a href="{{ path('chirurgien_index') }}">⬅ Retour</a>
+
+{% endblock %}

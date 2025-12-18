@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %} {# Bloc principal du contenu de la page #} {%
+block body %} {# Affiche le prénom et le nom de l'utilisateur en titre #}
+<h1>{{ utilisateur.prenom }} {{ utilisateur.nom }}</h1>
+
+{# Affichage de l'adresse email de l'utilisateur #}
+<p>
+    <strong>Email :</strong>
+    {{ utilisateur.email }}
+</p>
+
+{# Affichage des rôles de l'utilisateur (liste séparée par des virgules) #}
+<p>
+    <strong>Rôles :</strong>
+    {{ utilisateur.roles|join(', ') }}
+</p>
+
+{# Lien de retour vers la liste des utilisateurs #}
+<a href="{{ path('utilisateur_index') }}">⬅ Retour</a>
+
+{% endblock %}

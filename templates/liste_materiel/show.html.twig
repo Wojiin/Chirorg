@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %} {# Bloc principal du contenu de la page #} {%
+block body %} {# Titre de la page : intitulé de la liste de matériel #}
+<h1>{{ liste.intitule }}</h1>
+
+{# Affichage du chirurgien associé à la liste #}
+<p>
+    <strong>Chirurgien :</strong>
+    {{ liste.chirurgien.prenom }} {{ liste.chirurgien.nom }}
+</p>
+
+{# Section dédiée aux matériels contenus dans la liste #}
+<h2>Matériels</h2>
+
+{# Vérifie si la liste contient au moins un matériel #} {% if
+liste.materiels|length > 0 %}
+
+<ul>
+    {# Parcourt tous les matériels associés à la liste #} {% for m in
+    liste.materiels %}
+    <li>
+        {# Affiche les informations principales du matériel #}
+        <strong>{{ m.intitule }}</strong>
+        — {{ m.type }} — {{ m.adresse }}
+    </li>
+    {% endfor %}
+</ul>
+
+{% else %} {# Message affiché si aucun matériel n'est associé à la liste #}
+<p>Aucun matériel dans cette liste.</p>
+{% endif %} {# Lien de retour vers la liste des listes de matériel #}
+<a href="{{ path('liste_materiel_index') }}">⬅ Retour</a>
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %} {# Bloc principal du contenu de la page #} {%
+block body %} {# Titre de la page : modification d'une liste de matériel
+existante #}
+<h1>Modifier une liste de matériel</h1>
+
+{# Début du formulaire Symfony - ouvre la balise
+<form>
+    - ajoute automatiquement le token CSRF - gère la méthode et l'action #}
+    {{ form_start(form) }}
+
+    {# Affiche automatiquement tous les champs définis dans ListeMaterielType #}
+    {{ form_widget(form) }}
+
+    {# Bouton de soumission du formulaire #}
+    <button>Enregistrer</button>
+
+    {# Fin du formulaire Symfony #}
+    {{ form_end(form) }}
+
+    {# Lien de retour vers la liste des listes de matériel #}
+    <a href="{{ path('liste_materiel_index') }}">⬅ Retour</a>
+
+    {% endblock %}
+</form>

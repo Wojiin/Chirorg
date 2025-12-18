@@ -1,14 +1,46 @@
-{% extends 'base.html.twig' %}
+{% extends 'base.html.twig' %} {# Bloc principal du contenu de la page #} {%
+block body %} {# Titre de la page listant tous les utilisateurs #}
+<h1>Utilisateurs</h1>
 
-{% block title %}Liste des utilisateurs{% endblock %}
+{# Lien vers la page de création d'un nouvel utilisateur #}
+<a href="{{ path('utilisateur_new') }}">Créer un utilisateur</a>
 
-{% block body %}
-<h1>Liste des utilisateurs</h1>
+<ul>
+    {# Parcourt tous les utilisateurs transmis par le contrôleur #} {% for u in
+    utilisateurs %}
+    <li>
+        {# Affiche le prénom et le nom de l'utilisateur #}
+        <strong>{{ u.prenom }} {{ u.nom }}</strong>
+        — {{ u.email }}
+        <br />
 
-{% for utilisateur in utilisateurs %}
+        {# Affiche la liste des rôles de l'utilisateur #}
+        <small>Rôles : {{ u.roles|join(', ') }}</small>
+        <br />
 
-{{ utilisateur.prenom }} {{ utilisateur.nom }}
+        {# Liens vers les actions de l'utilisateur #}
+        <a href="{{ path('utilisateur_show', { id: u.id }) }}">Voir</a> |
+        <a href="{{ path('utilisateur_edit', { id: u.id }) }}">Modifier</a> | {#
+        Formulaire de suppression sécurisé par token CSRF #}
+        <form
+            method="post"
+            action="{{ path('utilisateur_delete', { id: u.id }) }}"
+            style="display: inline"
+        >
+            {# Token CSRF pour sécuriser la suppression #}
+            <input
+                type="hidden"
+                name="_token"
+                value="{{ csrf_token('delete' ~ u.id) }}"
+            />
 
-{% endfor %}
+            <button type="submit">Supprimer</button>
+        </form>
+    </li>
+
+    {# Bloc exécuté si aucun utilisateur n'existe #} {% else %}
+    <li>Aucun utilisateur.</li>
+    {% endfor %}
+</ul>
 
 {% endblock %}

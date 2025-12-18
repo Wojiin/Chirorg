@@ -135,26 +135,26 @@ CREATE TABLE IF NOT EXISTS `materiel` (
 
 -- Listage des données de la table chirorg.materiel : ~20 rows (environ)
 INSERT INTO `materiel` (`id`, `intitule`, `type`, `adresse`, `classer_id`) VALUES
-	(1, 401, 'Scalpel stérile', 'Instrument', 'Bloc A - Armoire 1', 3),
-	(2, 402, 'Perceuse chirurgicale', 'Appareil', 'Bloc B - Salle 2', 1),
-	(3, 403, 'Pince hémostatique', 'Instrument', 'Bloc A - Armoire 2', 2),
-	(4, 404, 'Écarteur cérébral', 'Instrument', 'Bloc C - Armoire 1', 4),
-	(5, 405, 'Bistouri électrique', 'Appareil', 'Bloc A - Salle 1', 3),
-	(6, 406, 'Écarteur abdominal', 'Instrument', 'Bloc B - Armoire 3', 3),
-	(7, 407, 'Valve cardiaque', 'Implant', 'Bloc C - Stock sécurisé', 2),
-	(8, 408, 'Clamp vasculaire', 'Instrument', 'Bloc D - Armoire 1', 7),
-	(9, 409, 'Caméra laparoscopique', 'Appareil', 'Bloc A - Salle 3', 3),
-	(10, 410, 'Sonde urinaire', 'Consommable', 'Bloc E - Stock', 8),
-	(11, 411, 'Agrafeuse cutanée', 'Instrument', 'Bloc B - Armoire 2', 5),
-	(12, 412, 'Scie oscillante', 'Appareil', 'Bloc A - Salle 2', 1),
-	(13, 413, 'Aspirateur chirurgical', 'Appareil', 'Bloc C - Salle 1', 6),
-	(14, 414, 'Micro-instruments neuro', 'Instrument', 'Bloc C - Armoire 4', 4),
-	(15, 415, 'Fil de suture', 'Consommable', 'Bloc E - Stock', 5),
-	(16, 416, 'Trocart', 'Instrument', 'Bloc A - Armoire 5', 3),
-	(17, 417, 'Cathéter', 'Consommable', 'Bloc E - Stock', 7),
-	(18, 418, 'Table opératoire mobile', 'Équipement', 'Bloc A', 6),
-	(19, 419, 'Masque anesthésie', 'Consommable', 'Bloc E - Stock', 2),
-	(20, 420, 'Laser chirurgical', 'Appareil', 'Bloc D - Salle spécialisée', 5);
+	(1, 'Scalpel stérile', 'Instrument', 'Bloc A - Armoire 1', 3),
+	(2, 'Perceuse chirurgicale', 'Appareil', 'Bloc B - Salle 2', 1),
+	(3, 'Pince hémostatique', 'Instrument', 'Bloc A - Armoire 2', 2),
+	(4, 'Écarteur cérébral', 'Instrument', 'Bloc C - Armoire 1', 4),
+	(5, 'Bistouri électrique', 'Appareil', 'Bloc A - Salle 1', 3),
+	(6, 'Écarteur abdominal', 'Instrument', 'Bloc B - Armoire 3', 3),
+	(7, 'Valve cardiaque', 'Implant', 'Bloc C - Stock sécurisé', 2),
+	(8, 'Clamp vasculaire', 'Instrument', 'Bloc D - Armoire 1', 7),
+	(9, 'Caméra laparoscopique', 'Appareil', 'Bloc A - Salle 3', 3),
+	(10,'Sonde urinaire', 'Consommable', 'Bloc E - Stock', 8),
+	(11, 'Agrafeuse cutanée', 'Instrument', 'Bloc B - Armoire 2', 5),
+	(12, 'Scie oscillante', 'Appareil', 'Bloc A - Salle 2', 1),
+	(13, 'Aspirateur chirurgical', 'Appareil', 'Bloc C - Salle 1', 6),
+	(14, 'Micro-instruments neuro', 'Instrument', 'Bloc C - Armoire 4', 4),
+	(15, 'Fil de suture', 'Consommable', 'Bloc E - Stock', 5),
+	(16, 'Trocart', 'Instrument', 'Bloc A - Armoire 5', 3),
+	(17, 'Cathéter', 'Consommable', 'Bloc E - Stock', 7),
+	(18, 'Table opératoire mobile', 'Équipement', 'Bloc A', 6),
+	(19, 'Masque anesthésie', 'Consommable', 'Bloc E - Stock', 2),
+	(20, 'Laser chirurgical', 'Appareil', 'Bloc D - Salle spécialisée', 5);
 
 -- Listage de la structure de table chirorg. materiel_liste_materiel
 CREATE TABLE IF NOT EXISTS `materiel_liste_materiel` (

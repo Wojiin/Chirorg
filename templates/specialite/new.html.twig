@@ -12,13 +12,14 @@ d'id - "Modifier" si la spécialité existe déjà #}
     {{ form_widget(form) }}
 
     {# Bouton de soumission du formulaire #}
-    <button>Enregistrer</button>
+    <button type="submit">Enregistrer</button>
 
-    {# Fin du formulaire Symfony #}
-    {{ form_end(form) }}
-
-    {# Lien de retour vers la liste des spécialités #}
-    <a href="{{ path('specialite_index') }}">⬅ Retour</a>
-
-    {% endblock %}
+    {# Fin du formulaire Symfony (ferme
 </form>
+) #}
+{{ form_end(form) }}
+
+{# Lien de retour vers la liste des spécialités #}
+<a href="{{ path('specialite_index') }}">⬅ Retour</a>
+
+{% endblock %}

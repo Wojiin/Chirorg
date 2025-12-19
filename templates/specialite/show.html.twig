@@ -1,15 +1,50 @@
 {% extends 'base.html.twig' %}
-{% block title %}{{specialite.intitule}}{% endblock %}
 
-{# Bloc principal du contenu de la page #} {%
-block body %} {# Affiche l'intitulé de la spécialité en titre #}
+{% block title %}{{ specialite.intitule }}{% endblock %}
+
+{% block body %}
+
 <h1>{{ specialite.intitule }}</h1>
 
+{# Partial pour les actions modifier/supprimer #}
 {% include '_partials/_show_actions.html.twig' with {
     entity: specialite,
     edit_route: 'specialite_edit',
     delete_route: 'specialite_delete'
 } %}
+
+{# Section Chirurgiens associés #}
+<h2>Chirurgiens</h2>
+{% if specialite.chirurgiens|length > 0 %}
+    <ul>
+        {% for chirurgien in specialite.chirurgiens %}
+            <li>
+                <a href="{{ path('chirurgien_show', { id: chirurgien.id }) }}">
+                    {{ chirurgien.prenom }} {{ chirurgien.nom }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Aucun chirurgien associé à cette spécialité.</p>
+{% endif %}
+
+{# Section Matériels associés #}
+<h2>Matériels</h2>
+{% if specialite.materiels|length > 0 %}
+    <ul>
+        {% for materiel in specialite.materiels %}
+            <li>
+                <a href="{{ path('materiel_show', { id: materiel.id }) }}">
+                    {{ materiel.intitule }}
+                </a>
+                — {{ materiel.type }} — {{ materiel.adresse }}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Aucun matériel associé à cette spécialité.</p>
+{% endif %}
 
 {# Lien de retour vers la liste des spécialités #}
 <a href="{{ path('specialite_index') }}">⬅ Retour</a>

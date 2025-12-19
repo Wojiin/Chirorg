@@ -4,6 +4,12 @@
 block body %} {# Affiche l'intitulé de la chirurgie en titre #}
 <h1>{{ chirurgie.intitule }}</h1>
 
+{% include '_partials/_show_actions.html.twig' with {
+    entity: chirurgie,
+    edit_route: 'chirurgie_edit',
+    delete_route: 'chirurgie_delete'
+} %}
+
 {# Affichage de la date de la chirurgie (formatée) ou d'un tiret si absente #}
 <p>
     <strong>Date :</strong>

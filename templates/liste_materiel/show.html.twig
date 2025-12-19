@@ -5,6 +5,12 @@
 block body %} {# Titre de la page : intitulé de la liste de matériel #}
 <h1>{{ liste.intitule }}</h1>
 
+{% include '_partials/_show_actions.html.twig' with {
+    entity: liste,
+    edit_route: 'liste_materiel_edit',
+    delete_route: 'liste_materiel_delete'
+} %}
+
 {# Affichage du chirurgien associé à la liste #}
 <p>
     <strong>Chirurgien :</strong>

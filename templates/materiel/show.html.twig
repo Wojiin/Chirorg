@@ -5,6 +5,12 @@
 block body %} {# Titre de la page : intitulé du matériel #}
 <h1>{{ materiel.intitule }}</h1>
 
+{% include '_partials/_show_actions.html.twig' with {
+    entity: materiel,
+    edit_route: 'materiel_edit',
+    delete_route: 'materiel_delete'
+} %}
+
 {# Affichage du type du matériel #}
 <p>
     <strong>Type :</strong>

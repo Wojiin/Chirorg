@@ -4,6 +4,12 @@
 block body %} {# Affiche le prénom et le nom du chirurgien en titre #}
 <h1>{{ chirurgien.prenom }} {{ chirurgien.nom }}</h1>
 
+{% include '_partials/_show_actions.html.twig' with {
+    entity: chirurgien,
+    edit_route: 'chirurgien_edit',
+    delete_route: 'chirurgien_delete'
+} %}
+
 {# Affichage de la spécialité du chirurgien si elle existe #}
 <p>
     <strong>Spécialité :</strong>

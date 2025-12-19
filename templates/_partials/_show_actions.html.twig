@@ -1,0 +1,19 @@
+<div class="show-actions">
+    <a href="{{ path(edit_route, { id: entity.id }) }}"
+       class="btn btn-warning">
+        Modifier
+    </a>
+
+    <form method="post"
+          action="{{ path(delete_route, { id: entity.id }) }}"
+          onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ?');"
+          style="display:inline">
+
+        <input type="hidden" name="_token"
+               value="{{ csrf_token('delete' ~ entity.id) }}">
+
+        <button class="btn btn-danger">
+            Supprimer
+        </button>
+    </form>
+</div>

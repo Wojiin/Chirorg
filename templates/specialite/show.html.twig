@@ -1,4 +1,7 @@
-{% extends 'base.html.twig' %} {# Bloc principal du contenu de la page #} {%
+{% extends 'base.html.twig' %}
+{% block title %}{{specialite.intitule}}{% endblock %}
+
+{# Bloc principal du contenu de la page #} {%
 block body %} {# Affiche l'intitulé de la spécialité en titre #}
 <h1>{{ specialite.intitule }}</h1>
 

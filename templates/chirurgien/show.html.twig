@@ -1,4 +1,6 @@
-{% extends 'base.html.twig' %} {# Bloc principal du contenu de la page #} {%
+{% extends 'base.html.twig' %}
+{% block title %}{{chirurgien.prenom}} {{chirurgien.nom}}{% endblock %}
+{# Bloc principal du contenu de la page #} {%
 block body %} {# Affiche le prénom et le nom du chirurgien en titre #}
 <h1>{{ chirurgien.prenom }} {{ chirurgien.nom }}</h1>
 

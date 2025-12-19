@@ -10,7 +10,8 @@ block body %} {# Titre de la page listant tous les utilisateurs #}
     utilisateurs %}
     <li>
         {# Affiche le prénom et le nom de l'utilisateur #}
-        <strong>{{ u.prenom }} {{ u.nom }}</strong>
+        <a href="{{ path('utilisateur_show', { id: u.id }) }}"><strong>{{ u.prenom }} {{ u.nom }}</strong></a>
+        
         — {{ u.email }}
         <br />
 
@@ -19,8 +20,8 @@ block body %} {# Titre de la page listant tous les utilisateurs #}
         <br />
 
         {# Liens vers les actions de l'utilisateur #}
-        <a href="{{ path('utilisateur_show', { id: u.id }) }}">Voir</a> |
-        <a href="{{ path('utilisateur_edit', { id: u.id }) }}">Modifier</a> | {#
+         
+        <a href="{{ path('utilisateur_edit', { id: u.id }) }}">Modifier</a>  {#
         Formulaire de suppression sécurisé par token CSRF #}
         <form
             method="post"

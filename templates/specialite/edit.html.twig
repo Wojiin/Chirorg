@@ -1,7 +1,10 @@
-{% extends 'base.html.twig' %} {# Bloc principal du contenu de la page #} {%
+{% extends 'base.html.twig' %}
+{% block title %}Modifier {{specialite.intitule}} {% endblock %}
+
+{# Bloc principal du contenu de la page #} {%
 block body %} {# Titre dynamique : - "Créer" si la spécialité n'a pas encore
 d'id - "Modifier" si la spécialité existe déjà #}
-<h1>{{ specialite.id ? "Modifier" : "Créer" }} une spécialité</h1>
+<h1>{{ specialite.id ? "Modifier" : "Créer" }} {{specialite.intitule}}</h1>
 
 {# Début du formulaire Symfony - ouvre la balise
 <form>

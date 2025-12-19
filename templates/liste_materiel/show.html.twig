@@ -1,4 +1,7 @@
-{% extends 'base.html.twig' %} {# Bloc principal du contenu de la page #} {%
+{% extends 'base.html.twig' %}
+{% block title %}{{liste.intitule}}{% endblock %}
+
+{# Bloc principal du contenu de la page #} {%
 block body %} {# Titre de la page : intitulé de la liste de matériel #}
 <h1>{{ liste.intitule }}</h1>
 

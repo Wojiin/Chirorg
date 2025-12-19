@@ -1,4 +1,6 @@
-{% extends 'base.html.twig' %} {# Bloc principal du contenu de la page #} {%
+{% extends 'base.html.twig' %}
+{% block title %}{{utilisateur.prenom}} {{utilisateur.nom}}{% endblock %}
+{# Bloc principal du contenu de la page #} {%
 block body %} {# Affiche le prénom et le nom de l'utilisateur en titre #}
 <h1>{{ utilisateur.prenom }} {{ utilisateur.nom }}</h1>
 

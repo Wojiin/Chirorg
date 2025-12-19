@@ -1,7 +1,9 @@
-{% extends 'base.html.twig' %} {# Bloc principal du contenu de la page #} {%
-block body %} {# Titre dynamique : "Créer" si pas d'id, "Modifier" si la
+{% extends 'base.html.twig' %} {# Bloc principal du contenu de la page #}
+ {% block title %}Modifier {{chirurgie.intitule}}{% endblock %}
+{%block body %} {# Titre dynamique : "Créer" si pas d'id, "Modifier" si la
 chirurgie existe déjà #}
-<h1>{{ chirurgie.id ? "Modifier" : "Créer" }} une chirurgie</h1>
+
+<h1>{{ chirurgie.id ? "Modifier" : "Créer" }} {{chirurgie.intitule}}</h1>
 
 {# Début du formulaire Symfony #}
 {{ form_start(form) }}

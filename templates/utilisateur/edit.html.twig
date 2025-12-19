@@ -1,6 +1,9 @@
-{% extends 'base.html.twig' %} {# Bloc principal du contenu de la page #} {%
+{% extends 'base.html.twig' %}
+{% block title %}Modifier {{utilisateur.prenom}} {{utilisateur.nom}}{% endblock %}
+
+{# Bloc principal du contenu de la page #} {%
 block body %} {# Titre de la page : modification d'un utilisateur existant #}
-<h1>Modifier un utilisateur</h1>
+<h1>Modifier {{utilisateur.prenom}} {{utilisateur.nom}}</h1>
 
 {# Début du formulaire Symfony - ouvre la balise
 <form>

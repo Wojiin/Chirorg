@@ -1,6 +1,8 @@
-{% extends 'base.html.twig' %} {# Bloc principal du contenu de la page #} {%
+{% extends 'base.html.twig' %}
+{% block title %}Modifier {{chirurgien.prenom}} {{chirurgien.nom}}{% endblock %}
+{# Bloc principal du contenu de la page #} {%
 block body %} {# Titre de la page : modification d'un chirurgien existant #}
-<h1>Modifier un chirurgien</h1>
+<h1>Modifier {{chirurgien.prenom}} {{chirurgien.nom}}</h1>
 
 {# Début du formulaire Symfony - ouvre la balise
 <form>

@@ -28,39 +28,3 @@
     color: #f6ad55;
     text-shadow: 0 0 8px rgba(246, 173, 85, 0.4);
 }
-
-/* Barre progressive sous les liens */
-.topbar {
-    position: relative;
-}
-
-.topbar a {
-    position: relative;
-    display: inline-block;
-    text-decoration: none;
-    color: #bfddff; /* couleur des liens */
-    font-weight: 800;
-    transition: color 0.5s, text-shadow 0.5s;
-}
-
-.topbar a::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -4px; /* un peu en dessous du texte */
-    width: 0;
-    height: 3px;
-    background: linear-gradient(90deg, #f28e2b, #f6ad55, #f9d9a8);
-    transition: width 1s cubic-bezier(0.25, 0.8, 0.25, 1);
-    border-radius: 2px;
-    box-shadow: 0 0 6px rgba(246, 173, 85, 0.6);
-}
-
-.topbar a:hover {
-    color: #f6ad55;
-    text-shadow: 0 0 8px rgba(246, 173, 85, 0.4);
-}
-
-.topbar a:hover::after {
-    width: 100%;
-}

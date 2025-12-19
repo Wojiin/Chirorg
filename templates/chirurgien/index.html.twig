@@ -2,10 +2,10 @@
 {% block title %}Liste des chirurgiens{% endblock %}
 {# Bloc principal du contenu de la page #} {%
 block body %} {# Titre de la page listant tous les chirurgiens #}
-<h1 class="text-4xl font-bold">Chirurgiens</h1>
+<h1>Chirurgiens</h1>
 
 {# Lien vers la page de création d'un nouveau chirurgien #}
-<a href="{{ path('chirurgien_new') }}">Créer un chirurgien</a>
+<a href="{{ path('chirurgien_new') }}"class="link-glow">Créer un chirurgien</a>
 
 <ul>
     {# Parcourt la liste des chirurgiens transmise par le contrôleur #} {% for c
@@ -13,13 +13,13 @@ block body %} {# Titre de la page listant tous les chirurgiens #}
     <li>
         {# Nom complet du chirurgien avec lien vers la page détail #}
         <strong>
-            <a href="{{ path('chirurgien_show', { id: c.id }) }}">
+            <a href="{{ path('chirurgien_show', { id: c.id }) }}"class="link-glow">
                 {{ c.prenom }} {{ c.nom }}
             </a>
         </strong>
 
         {# Affichage de la spécialité si elle existe #} — {% if c.specialiser %}
-        <a href="{{ path('specialite_show', { id: c.specialiser.id }) }}">
+        <a href="{{ path('specialite_show', { id: c.specialiser.id }) }}"class="link-glow">
             {{ c.specialiser.intitule }}
         </a>
         {% else %} Aucune spécialité {% endif %}

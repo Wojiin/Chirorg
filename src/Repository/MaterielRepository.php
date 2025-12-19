@@ -38,4 +38,6 @@ class MaterielRepository extends ServiceEntityRepository
             # Exécute la requête et retourne un tableau d'objets Materiel
             ->getResult();
     }
+
+    
 }

@@ -23,7 +23,7 @@ class ListeMateriel
     # Chirurgien associé à la liste de matériel
     # Relation ManyToOne : plusieurs listes peuvent appartenir au même chirurgien
     #[ORM\ManyToOne(inversedBy: 'listesMateriel')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true, onDelete: "SET NULL")]
     private ?Chirurgien $chirurgien = null;
 
     # Liste des chirurgies utilisant cette liste de matériel

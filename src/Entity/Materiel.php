@@ -31,6 +31,7 @@ class Materiel
     # Spécialité à laquelle le matériel est rattaché
     # Relation ManyToOne : plusieurs matériels peuvent appartenir à une même spécialité
     #[ORM\ManyToOne(inversedBy: 'materiels')]
+    #[ORM\JoinColumn(nullable: true, onDelete: "SET NULL")]
     private ?Specialite $classer = null;
 
     # Listes de matériel auxquelles ce matériel appartient

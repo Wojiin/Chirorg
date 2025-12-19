@@ -35,6 +35,7 @@ class Chirurgien
     # Spécialité associée au chirurgien
     # Relation ManyToOne (plusieurs chirurgiens peuvent avoir la même spécialité)
     #[ORM\ManyToOne(inversedBy: 'chirurgiens')]
+    #[ORM\JoinColumn(nullable: true, onDelete: "SET NULL")]
     private ?Specialite $specialiser = null;
 
     public function __construct()

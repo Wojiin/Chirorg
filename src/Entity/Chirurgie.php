@@ -37,14 +37,17 @@ class Chirurgie
 
     # Utilisateur ayant créé ou organisé la chirurgie
     #[ORM\ManyToOne(inversedBy: 'organiser')]
+    #[ORM\JoinColumn(nullable: true, onDelete: "SET NULL")]
     private ?Utilisateur $utilisateur = null;
 
     # Chirurgien qui opère la chirurgie
     #[ORM\ManyToOne(inversedBy: 'outiller')]
+    #[ORM\JoinColumn(nullable: true, onDelete: "SET NULL")]
     private ?Chirurgien $operer = null;
 
     # Liste de matériel utilisée pour la chirurgie
     #[ORM\ManyToOne(inversedBy: 'chirurgies')]
+    #[ORM\JoinColumn(nullable: true, onDelete: "SET NULL")]
     private ?ListeMateriel $outiller = null;
 
     # Retourne l'identifiant de la chirurgie

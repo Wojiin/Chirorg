@@ -1,25 +1,20 @@
 @import "tailwindcss";
 @source not "../../public";
 
-
-
 @theme {
     --color-base-300: #bfddff;
     --color-base-400: #4892e0;
-    --color-base-500:#4175AD;
-    --color-rad-100: #2A3B4D;
-    --color-rad-200: #1C2A38;
-    --color-rad-300: #0F161D;
-    
+    --color-base-500: #4175ad;
+    --color-rad-100: #2a3b4d;
+    --color-rad-200: #1c2a38;
+    --color-rad-300: #0f161d;
 }
-
-
 
 /* Liens + liens hover */
 .link-glow {
     color: #bfddff;
     font-weight: 800;
-    font-size: 1.5rem; 
+    font-size: 1.5rem;
     text-decoration: none;
     transition: color 0.5s, text-shadow 0.5s;
 }
